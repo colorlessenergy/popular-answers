@@ -5,14 +5,31 @@ import firebase from '../firebase';
 import { useCollection } from 'react-firebase-hooks/firestore';
 
 import Nav from '../shared/components/Nav';
+import { getAnsweredQuestionsFromLocalStorage } from '../shared/questions';
 
 export default function Home() {
     const [ questions, loading, error ] = useCollection(
         firebase.firestore().collection('questions'),
         {
-        snapshotListenOptions: { includeMetadataChanges: true },
+            snapshotListenOptions: { includeMetadataChanges: true },
         }
     );
+
+
+    let question = null;
+    if (typeof localStorage !== 'undefined' && questions) {
+        const answeredQuestions = getAnsweredQuestionsFromLocalStorage();
+        for (let i = 0; i < questions.docs.length; i++) {
+            if (!answeredQuestions.includes(questions.docs[i].id)) {
+                question = {
+                    id: questions.docs[i].id,
+                    ...questions.docs[i].data()
+                }
+
+                break;
+            }
+        }
+    }
 
     return (
         <div>
@@ -24,21 +41,26 @@ export default function Home() {
 
             <div className="container">
                 <Nav />
-                <div className="question flex align-items-center justify-content-center">
-                    pancakes or waffles
-                </div>
 
-                <div className="flex justify-content-between">
-                    <button className="button button-green text">
-                        pancakes
-                    </button>
+                { question ? (
+                       <div>
+                            <div className="question flex align-items-center justify-content-center">
+                                { question.question }
+                            </div>
 
-                    <button className="button button-red text">
-                        waffles
-                    </button>
-                </div>
+                            <div className="flex justify-content-between">
+                                { question.answers.map(answer => {
+                                    return (
+                                        <button className="button text">
+                                            { answer.text }
+                                        </button>
+                                    );
+                                }) }
+                            </div>
+                        </div>
+                ) : (null) }
 
-                <div className="flex justify-content-between mt-2">
+                {/* <div className="flex justify-content-between mt-2">
                     <div className="text-large text-bold">
                         60%
                     </div>
@@ -72,7 +94,7 @@ export default function Home() {
                         alt="right angle"
                         width={ 15 }
                         height={ 15 } />
-                </div>
+                </div> */}
             </div>
         </div>
     );
