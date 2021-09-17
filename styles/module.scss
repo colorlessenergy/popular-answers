@@ -1,0 +1,48 @@
+@use 'variables' as *;
+
+.button {
+  border: 3px solid #000000;
+  border-radius: 4px;
+  min-width: 120px;
+  min-height: 50px;
+
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.button-red {
+  background-color: $red;
+}
+
+.button-green {
+  background-color: $green;
+}
+
+.text {
+  font-size: 18px;
+}
+
+.text-medium {
+  font-size: 24px;
+}
+
+.text-large {
+  font-size: 36px;
+}
+
+.text-bold {
+  font-weight: 700;
+}
+
+.container {
+  margin: 0 $space-medium;
+}
+
+.question {
+  border: 3px solid #000;
+  margin: 0 0 $space-medium 0;
+  min-height: 300px;
+
+  font-weight: 700;
+  font-size: 20px;
+}
