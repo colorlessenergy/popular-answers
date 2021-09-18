@@ -10,11 +10,15 @@ export default function Nav ({ includeHomePage = false }) {
                 </Link>
             ) : (null) }
 
-            <Image
-                src="/assets/gear.svg"
-                alt="gear icon"
-                width={ 50 }
-                height={ 50 } />
+            <Link href="/settings">
+                <a>
+                    <Image
+                        src="/assets/gear.svg"
+                        alt="gear icon"
+                        width={ 50 }
+                        height={ 50 } />
+                </a>    
+            </Link> 
         </nav>
     );
 }
