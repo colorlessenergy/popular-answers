@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function Nav ({ includeHomePage = false }) {
     return (
-        <nav className="text-align-right">
+        <nav className={ includeHomePage ? ("flex justify-content-between align-items-center") : ("text-align-right") }>
             { includeHomePage ? (
                 <Link href="/">
                     <a>Home</a>
