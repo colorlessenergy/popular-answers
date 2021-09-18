@@ -111,7 +111,11 @@ export default function Home() {
                                 }) }
                             </div>
                         </div>
-                ) : (null) }
+                ) : (
+                    <div className="text-medium text-bold mt-3">
+                        there are no more questions at this time come back later. 
+                    </div>
+                    ) }
 
                 { isQuestionAnswered ? (
                     <Fragment>
