@@ -16,6 +16,14 @@ export default function Settings () {
         }
     }
 
+    const isDefaultChecked = () => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme') === 'dark') {
+            return true;
+        }
+
+        return false;
+    }
+
     return (
         <div className="container">
             <Nav includeHomePage={ true } />
@@ -36,6 +44,7 @@ export default function Settings () {
                     type="checkbox"
                     className="d-none dark-mode-input"
                     onClick={ handleDarkMode }
+                    defaultChecked={ isDefaultChecked() }
                     id="dark-mode" />
                 <label
                     htmlFor="dark-mode"
