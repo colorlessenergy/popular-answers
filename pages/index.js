@@ -31,6 +31,19 @@ export default function Home() {
         }
     }
 
+    const [ isQuestionAnswered, setIsQuestionAnswered ] = useState(false);
+    const handleButtonClick = ({ questionID, answerID }) => {
+        firebase.firestore().collection('questions').doc(questionID).update({
+            [ answerID ]: firebase.firestore.FieldValue.increment(1)
+        })
+        .then(() => {
+            setIsQuestionAnswered(true);
+        })
+        .catch(error => {
+            console.error("Error updating document: ", error);
+        });
+    }
+
     return (
         <div>
             <Head>
@@ -51,7 +64,9 @@ export default function Home() {
                             <div className="flex justify-content-between">
                                 { question.answers.map(answer => {
                                     return (
-                                        <button className="button text">
+                                        <button
+                                            onClick={ () => handleButtonClick({ questionID: question.id, answerID: answer.id }) }
+                                            className="button text">
                                             { answer.text }
                                         </button>
                                     );
