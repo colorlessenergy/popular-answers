@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Image from 'next/image';
+import { useState, Fragment } from 'react';
 
 import firebase from '../firebase';
 import { useCollection } from 'react-firebase-hooks/firestore';
@@ -44,6 +45,38 @@ export default function Home() {
         });
     }
 
+    const getTotalVotes = () => {
+        // only two answers exists
+        const getIDs = [1, 2];
+        const totalVotes = getIDs.reduce((accumulator, ID) => question[ ID ] + accumulator, 0);
+
+        return totalVotes;
+    }
+
+    const getClassNameForButtons = (answerID) => {
+        // only two answers exists
+        const passedInIDAmountOfVotes = question[ answerID ];
+        let findSecondID;
+        if (answerID === 1) {
+            findSecondID = 2;
+        } else {
+            findSecondID = 1;
+        }
+        const secondIDAmountOfVotes = question[ findSecondID ];
+
+        if (passedInIDAmountOfVotes < secondIDAmountOfVotes) {
+            return 'button-red';
+        } else {
+            return 'button-green';
+        }
+
+    }
+
+    let totalVotes = null;
+    if (isQuestionAnswered) {
+        totalVotes = getTotalVotes();
+    }
+
     return (
         <div>
             <Head>
@@ -65,8 +98,9 @@ export default function Home() {
                                 { question.answers.map(answer => {
                                     return (
                                         <button
+                                            key={ answer.id }
                                             onClick={ () => handleButtonClick({ questionID: question.id, answerID: answer.id }) }
-                                            className="button text">
+                                            className={`button text ${ isQuestionAnswered ? (getClassNameForButtons(answer.id)) : ("") }`}>
                                             { answer.text }
                                         </button>
                                     );
@@ -75,41 +109,42 @@ export default function Home() {
                         </div>
                 ) : (null) }
 
-                {/* <div className="flex justify-content-between mt-2">
-                    <div className="text-large text-bold">
-                        60%
-                    </div>
+                { isQuestionAnswered ? (
+                    <Fragment>
+                        <div className="flex justify-content-between mt-2">
+                            { question.answers.map((answer, index) => { 
+                                return (
+                                    <div
+                                        key={ answer.id }
+                                        className={ index === question.answers.length-1 ? "text-align-right" : "" }>
+                                        <div className="text-large text-bold">
+                                            { (question[answer.id] / totalVotes * 100).toFixed(2) }%
+                                        </div>
 
-                    <div className="text-large text-bold">
-                        40%
-                    </div>
-                </div>
+                                        <div className="text-medium">
+                                            { question[answer.id] } votes
+                                        </div>
+                                    </div>
+                                );
+                            }) }
+                        </div>
+                        <div className="flex justify-content-center text-medium text-bold mt-1">
+                            { totalVotes } total votes
+                        </div>
 
-                <div className="flex justify-content-between">
-                    <div className="text-medium">
-                        24 votes
-                    </div>
+                        <div className="flex justify-content-center align-items-center mt-2">
+                            <div className="text text-bold mr-1">
+                                next question 
+                            </div>
 
-                    <div className="text-medium">
-                        16 votes
-                    </div>
-                </div>
-
-                <div className="flex justify-content-center text-medium text-bold mt-1">
-                    40 total votes
-                </div>
-
-                <div className="flex justify-content-center align-items-center mt-2">
-                    <div className="text text-bold mr-1">
-                        next question 
-                    </div>
-
-                    <Image
-                        src="/assets/right-angle.svg"
-                        alt="right angle"
-                        width={ 15 }
-                        height={ 15 } />
-                </div> */}
+                            <Image
+                                src="/assets/right-angle.svg"
+                                alt="right angle"
+                                width={ 15 }
+                                height={ 15 } />
+                        </div>
+                    </Fragment>
+                ) : (null) }
             </div>
         </div>
     );
