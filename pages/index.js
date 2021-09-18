@@ -23,6 +23,16 @@ export default function Home() {
         }
     }, [ questions, isQuestionAnswered ]);
 
+    useEffect(() => {
+        if (questions && question) {
+            const updatedQuestion = questions.docs.find(questionFromFirestore => questionFromFirestore.id === question.id);
+            setQuestion({
+                id: updatedQuestion.id,
+                ...updatedQuestion.data()
+            });
+        }
+    }, [ questions ]);
+
     let [ question, setQuestion ] = useState(null)
     const getQuestion = () => {
         if (questions) {
