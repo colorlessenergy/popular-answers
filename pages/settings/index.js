@@ -37,7 +37,7 @@ export default function Settings () {
             <div className="flex justify-content-between align-items-center mt-2">
                 <label
                     htmlFor="dark-mode"
-                    className="text text-bold text-underline">
+                    className="text text-bold text-underline cursor-pointer">
                     dark mode
                 </label>
                 <input
@@ -48,7 +48,7 @@ export default function Settings () {
                     id="dark-mode" />
                 <label
                     htmlFor="dark-mode"
-                    className="dark-mode-checkbox"></label>
+                    className="dark-mode-checkbox cursor-pointer"></label>
             </div>
         </div>
     );
