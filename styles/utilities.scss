@@ -20,6 +20,10 @@
   display: none;
 }
 
+.d-block {
+  display: block;
+}
+
 .text-align-right {
   text-align: right;
 }
@@ -38,6 +42,10 @@
 
 .mr-1 {
   margin-right: $space-small;
+}
+
+.mb-2 {
+  margin-bottom: $space-small;
 }
 
 .ease-background-color {
