@@ -1,0 +1,62 @@
+@use 'variables' as *;
+
+.flex {
+  display: flex;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.justify-content-between {
+  justify-content: space-between;
+}
+
+.d-none {
+  display: none;
+}
+
+.d-block {
+  display: block;
+}
+
+.text-align-right {
+  text-align: right;
+}
+
+.mt-1 {
+  margin-top: $space-small;
+}
+
+.mt-2 {
+  margin-top: $space-medium;
+}
+
+.mt-3 {
+  margin-top: $space-large;
+}
+
+.mr-1 {
+  margin-right: $space-small;
+}
+
+.mb-2 {
+  margin-bottom: $space-small;
+}
+
+.ease-background-color {
+  transition: background-color 0.5s ease;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.mlr-auto {
+  margin-left: auto;
+  margin-right: auto;
+}

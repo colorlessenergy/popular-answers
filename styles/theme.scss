@@ -1,0 +1,37 @@
+@use 'variables' as *;
+
+body.dark,
+html > body.dark {
+  background-color: $black;
+  color: $white;
+}
+
+body.dark button {
+  color: $white;
+}
+
+body.dark .gear path,
+.gear circle,
+body.dark .angle-right path {
+  fill: $white;
+}
+
+body.dark .gear circle,
+.angle-right path {
+  fill: $black;
+}
+
+body.dark .question {
+  border: 3px solid $white;
+}
+
+body.dark .button {
+  color: $white;
+  border: 3px solid $white;
+}
+
+body.dark .button-red,
+body.dark .button-green {
+  color: $black;
+  border: none;
+}

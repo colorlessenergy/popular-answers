@@ -1,0 +1,62 @@
+@use 'variables' as *;
+
+.button {
+  border: 3px solid #000000;
+  border-radius: 4px;
+  min-width: 120px;
+  min-height: 50px;
+}
+
+.button-red {
+  background-color: $red;
+}
+
+.button-green {
+  background-color: $green;
+}
+
+.text {
+  font-size: 18px;
+}
+
+.text-medium {
+  font-size: 24px;
+}
+
+.text-large {
+  font-size: 36px;
+}
+
+.text-bold {
+  font-weight: 700;
+}
+
+.text-underline {
+  text-decoration: underline;
+}
+
+.container {
+  margin: 0 $space-medium;
+}
+
+.question {
+  border: 3px solid #000;
+  margin: 0 0 $space-medium 0;
+  min-height: 300px;
+
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.dark-mode-checkbox {
+  border: 3px solid #000000;
+  display: block;
+  height: 20px;
+  width: 20px;
+}
+
+.dark-mode-input[type="checkbox"]:checked + .dark-mode-checkbox {
+  border: none;
+
+  background-color: $white;
+}
