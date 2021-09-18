@@ -33,11 +33,9 @@ export default function Home() {
 
     const [ isQuestionAnswered, setIsQuestionAnswered ] = useState(false);
     const handleButtonClick = ({ questionID, answerID }) => {
+        setIsQuestionAnswered(true);
         firebase.firestore().collection('questions').doc(questionID).update({
             [ answerID ]: firebase.firestore.FieldValue.increment(1)
-        })
-        .then(() => {
-            setIsQuestionAnswered(true);
         })
         .catch(error => {
             console.error("Error updating document: ", error);
