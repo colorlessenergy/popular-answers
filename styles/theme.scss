@@ -6,6 +6,10 @@ html > body.dark {
   color: $white;
 }
 
+body.dark button {
+  color: $white;
+}
+
 body.dark .gear path,
 .gear circle,
 body.dark .angle-right path {
