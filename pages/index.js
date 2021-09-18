@@ -1,6 +1,6 @@
 import Head from 'next/head';
 import Image from 'next/image';
-import { useState, Fragment } from 'react';
+import { useState, Fragment, useEffect } from 'react';
 
 import firebase from '../firebase';
 import { useCollection } from 'react-firebase-hooks/firestore';
@@ -16,23 +16,30 @@ export default function Home() {
         }
     );
 
-    let question = null;
-    if (typeof localStorage !== 'undefined' && questions) {
-        const answeredQuestions = getAnsweredQuestionsFromLocalStorage();
-        for (let i = 0; i < questions.docs.length; i++) {
-            if (!answeredQuestions.includes(questions.docs[i].id)) {
-                question = {
-                    id: questions.docs[i].id,
-                    ...questions.docs[i].data()
-                }
+    let [ isQuestionAnswered, setIsQuestionAnswered ] = useState(false);
+    useEffect(() => {
+        if (isQuestionAnswered === false) {
+            setQuestion(getQuestion());
+        }
+    }, [ questions, isQuestionAnswered ]);
 
-                break;
+    let [ question, setQuestion ] = useState(null)
+    const getQuestion = () => {
+        if (questions) {
+            const answeredQuestions = getAnsweredQuestionsFromLocalStorage();
+            for (let i = 0; i < questions.docs.length; i++) {
+                if (!answeredQuestions.includes(questions.docs[i].id)) {
+                    return {
+                        id: questions.docs[i].id,
+                        ...questions.docs[i].data()
+                    }
+                }
             }
         }
     }
 
-    const [ isQuestionAnswered, setIsQuestionAnswered ] = useState(false);
     const handleButtonClick = (answerID) => {
+        setAnsweredQuestionToLocalStorage(question.id); 
         setIsQuestionAnswered(true);
         firebase.firestore().collection('questions').doc(question.id).update({
             [ answerID ]: firebase.firestore.FieldValue.increment(1)
@@ -48,8 +55,8 @@ export default function Home() {
     }
 
     const populateNextQuestion = () => {
-        setAnsweredQuestionToLocalStorage(question.id);
         setIsQuestionAnswered(false);
+        setQuestion(getQuestion());
     }
 
     return (
