@@ -34,7 +34,7 @@ export default function Settings () {
                 </label>
                 <input
                     type="checkbox"
-                    className="d-none"
+                    className="d-none dark-mode-input"
                     onClick={ handleDarkMode }
                     id="dark-mode" />
                 <label
