@@ -32,9 +32,9 @@ export default function Home() {
     }
 
     const [ isQuestionAnswered, setIsQuestionAnswered ] = useState(false);
-    const handleButtonClick = ({ questionID, answerID }) => {
+    const handleButtonClick = (answerID) => {
         setIsQuestionAnswered(true);
-        firebase.firestore().collection('questions').doc(questionID).update({
+        firebase.firestore().collection('questions').doc(question.id).update({
             [ answerID ]: firebase.firestore.FieldValue.increment(1)
         })
         .catch(error => {
@@ -74,7 +74,7 @@ export default function Home() {
                                     return (
                                         <button
                                             key={ answer.id }
-                                            onClick={ isQuestionAnswered === false ? (() => handleButtonClick({ questionID: question.id, answerID: answer.id })) : (undefined) }
+                                            onClick={ isQuestionAnswered === false ? (() => handleButtonClick(answer.id)) : (undefined) }
                                             className={`button text ease-background-color ${ isQuestionAnswered ? (getClassNameForButtons({ question, answerID: answer.id })) : ("") }`}>
                                             { answer.text }
                                         </button>
