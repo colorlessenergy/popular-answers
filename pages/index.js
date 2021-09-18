@@ -6,7 +6,7 @@ import firebase from '../firebase';
 import { useCollection } from 'react-firebase-hooks/firestore';
 
 import Nav from '../shared/components/Nav';
-import { getAnsweredQuestionsFromLocalStorage, setAnsweredQuestionToLocalStorage } from '../shared/questions';
+import { getAnsweredQuestionsFromLocalStorage, setAnsweredQuestionToLocalStorage, getTotalVotes, getClassNameForButtons } from '../shared/questions';
 
 export default function Home() {
     const [ questions, loading, error ] = useCollection(
@@ -44,36 +44,9 @@ export default function Home() {
         });
     }
 
-    const getTotalVotes = () => {
-        // only two answers exists
-        const getIDs = [1, 2];
-        const totalVotes = getIDs.reduce((accumulator, ID) => question[ ID ] + accumulator, 0);
-
-        return totalVotes;
-    }
-
-    const getClassNameForButtons = (answerID) => {
-        // only two answers exists
-        const passedInIDAmountOfVotes = question[ answerID ];
-        let findSecondID;
-        if (answerID === 1) {
-            findSecondID = 2;
-        } else {
-            findSecondID = 1;
-        }
-        const secondIDAmountOfVotes = question[ findSecondID ];
-
-        if (passedInIDAmountOfVotes < secondIDAmountOfVotes) {
-            return 'button-red';
-        } else {
-            return 'button-green';
-        }
-
-    }
-
     let totalVotes = null;
     if (isQuestionAnswered) {
-        totalVotes = getTotalVotes();
+        totalVotes = getTotalVotes(question);
     }
 
     const populateNextQuestion = () => {
@@ -104,7 +77,7 @@ export default function Home() {
                                         <button
                                             key={ answer.id }
                                             onClick={ isQuestionAnswered === false ? (() => handleButtonClick({ questionID: question.id, answerID: answer.id })) : (undefined) }
-                                            className={`button text ease-background-color ${ isQuestionAnswered ? (getClassNameForButtons(answer.id)) : ("") }`}>
+                                            className={`button text ease-background-color ${ isQuestionAnswered ? (getClassNameForButtons({ question, answerID: answer.id })) : ("") }`}>
                                             { answer.text }
                                         </button>
                                     );
