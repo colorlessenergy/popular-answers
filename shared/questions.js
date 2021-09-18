@@ -5,3 +5,10 @@ export const getAnsweredQuestionsFromLocalStorage = () => {
 
     return JSON.parse(localStorage.getItem('answeredQuestions'));
 }
+
+export const setAnsweredQuestionToLocalStorage = (questionID) => {
+    let answeredQuestions = JSON.parse(localStorage.getItem('answeredQuestions'))
+    answeredQuestions.push(questionID);
+
+    localStorage.setItem('answeredQuestions', JSON.stringify(answeredQuestions));
+}
