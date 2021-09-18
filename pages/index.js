@@ -111,11 +111,15 @@ export default function Home() {
                                 }) }
                             </div>
                         </div>
+                ) : (loading ? (
+                    <div className="text-medium mt-3">
+                        Loading...
+                    </div>
                 ) : (
                     <div className="text-medium text-bold mt-3">
                         there are no more questions at this time come back later. 
                     </div>
-                    ) }
+                )) }
 
                 { isQuestionAnswered ? (
                     <Fragment>
