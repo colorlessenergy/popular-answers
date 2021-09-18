@@ -6,7 +6,7 @@ import firebase from '../firebase';
 import { useCollection } from 'react-firebase-hooks/firestore';
 
 import Nav from '../shared/components/Nav';
-import { getAnsweredQuestionsFromLocalStorage } from '../shared/questions';
+import { getAnsweredQuestionsFromLocalStorage, setAnsweredQuestionToLocalStorage } from '../shared/questions';
 
 export default function Home() {
     const [ questions, loading, error ] = useCollection(
@@ -15,7 +15,6 @@ export default function Home() {
             snapshotListenOptions: { includeMetadataChanges: true },
         }
     );
-
 
     let question = null;
     if (typeof localStorage !== 'undefined' && questions) {
@@ -77,6 +76,11 @@ export default function Home() {
         totalVotes = getTotalVotes();
     }
 
+    const populateNextQuestion = () => {
+        setAnsweredQuestionToLocalStorage(question.id);
+        setIsQuestionAnswered(false);
+    }
+
     return (
         <div>
             <Head>
@@ -133,7 +137,9 @@ export default function Home() {
                         </div>
 
                         <div className="flex justify-content-center align-items-center mt-2">
-                            <div className="text text-bold mr-1">
+                            <div
+                                onClick={ populateNextQuestion }
+                                className="text text-bold mr-1">
                                 next question 
                             </div>
 
