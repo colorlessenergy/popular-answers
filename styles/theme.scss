@@ -6,16 +6,14 @@ html > body.dark {
   color: $white;
 }
 
-body.dark .gear path {
-  fill: $white;
-}
-
+body.dark .gear path,
 .gear circle,
-.angle-right path {
+body.dark .angle-right path {
   fill: $white;
 }
 
-body.dark .gear circle {
+body.dark .gear circle,
+.angle-right path {
   fill: $black;
 }
 
