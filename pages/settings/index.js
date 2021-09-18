@@ -2,6 +2,20 @@ import Link from "next/link";
 import Nav from "../../shared/components/Nav";
 
 export default function Settings () {
+    const handleDarkMode = () => {
+        if (!localStorage.getItem('theme')) {
+            localStorage.setItem('theme', 'light');
+        }
+
+        if (localStorage.getItem('theme') === 'light') {
+            localStorage.setItem('theme', 'dark');
+            document.body.classList.add('dark')
+        } else {
+            localStorage.setItem('theme', 'light');
+            document.body.classList.remove('dark')
+        }
+    }
+
     return (
         <div className="container">
             <Nav includeHomePage={ true } />
@@ -18,13 +32,14 @@ export default function Settings () {
                     className="text text-bold text-underline">
                     dark mode
                 </label>
-                <label
-                    htmlFor="dark-mode"
-                    className="dark-mode-checkbox"></label>
                 <input
                     type="checkbox"
                     className="d-none"
+                    onClick={ handleDarkMode }
                     id="dark-mode" />
+                <label
+                    htmlFor="dark-mode"
+                    className="dark-mode-checkbox"></label>
             </div>
         </div>
     );
