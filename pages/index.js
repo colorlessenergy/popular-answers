@@ -91,7 +91,7 @@ export default function Home() {
                                         <button
                                             key={ answer.id }
                                             onClick={ isQuestionAnswered === false ? (() => handleButtonClick(answer.id)) : (undefined) }
-                                            className={`button text ease-background-color ${ isQuestionAnswered ? (getClassNameForButtons({ question, answerID: answer.id })) : ("") }`}>
+                                            className={`button text ease-background-color px-05 ${ isQuestionAnswered ? (getClassNameForButtons({ question, answerID: answer.id })) : ("") }`}>
                                             { answer.text }
                                         </button>
                                     );
