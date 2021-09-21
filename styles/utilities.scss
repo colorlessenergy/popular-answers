@@ -48,6 +48,11 @@
   margin-bottom: $space-small;
 }
 
+.px-05 {
+  padding-left: $space-extra-small;
+  padding-right: $space-extra-small;
+}
+
 .ease-background-color {
   transition: background-color 0.5s ease;
 }
